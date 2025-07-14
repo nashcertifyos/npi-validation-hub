@@ -51,9 +51,9 @@ export const CredentialingPortal = ({ npi, onLogout }: CredentialingPortalProps)
     setCurrentStep("validating");
     toast({ title: "Validating data..." });
     
-    // Simulate validation with 80% success rate
+    // Use specific NPIs for demo flows
     setTimeout(() => {
-      const isValid = Math.random() > 0.2;
+      const isValid = npi === "1234567890"; // Happy flow NPI
       
       if (isValid) {
         setCurrentStep("validated");
@@ -64,10 +64,10 @@ export const CredentialingPortal = ({ npi, onLogout }: CredentialingPortalProps)
         });
       } else {
         setCurrentStep("error");
-        setValidationResult("CAQH data mismatch - manual review required");
+        setValidationResult(npi === "1234554321" ? "CAQH data not found for this NPI" : "CAQH data mismatch - manual review required");
         toast({
           title: "Validation Failed",
-          description: "Data mismatch detected. Manual review required.",
+          description: npi === "1234554321" ? "CAQH data not found for this NPI." : "Data mismatch detected. Manual review required.",
           variant: "destructive",
         });
       }
